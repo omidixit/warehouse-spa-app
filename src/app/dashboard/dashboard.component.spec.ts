@@ -5,18 +5,18 @@ import { HeroSearchComponent } from '../hero-search/hero-search.component';
 
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
-import { HEROES } from '../mock-heroes';
-import { HeroService } from '../hero.service';
+import { PRODUCTS } from '../mock-products';
+import { ProductService } from '../product.service';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
   let fixture: ComponentFixture<DashboardComponent>;
-  let heroService;
-  let getHeroesSpy;
+  let productService;
+  let getProductsSpy;
 
   beforeEach(async(() => {
-    heroService = jasmine.createSpyObj('HeroService', ['getHeroes']);
-    getHeroesSpy = heroService.getHeroes.and.returnValue( of(HEROES) );
+    productService = jasmine.createSpyObj('ProductService', ['getProducts']);
+    getProductsSpy = productService.getProducts.and.returnValue( of(PRODUCTS) );
     TestBed.configureTestingModule({
       declarations: [
         DashboardComponent,
@@ -26,7 +26,7 @@ describe('DashboardComponent', () => {
         RouterTestingModule.withRoutes([])
       ],
       providers: [
-        { provide: HeroService, useValue: heroService }
+        { provide: ProductService, useValue: productService }
       ]
     })
     .compileComponents();
@@ -43,12 +43,12 @@ describe('DashboardComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display "Top Heroes" as headline', () => {
-    expect(fixture.nativeElement.querySelector('h3').textContent).toEqual('Top Heroes');
+  it('should display "Top Products" as headline', () => {
+    expect(fixture.nativeElement.querySelector('h3').textContent).toEqual('Top Products');
   });
 
   it('should call heroService', async(() => {
-    expect(getHeroesSpy.calls.any()).toBe(true);
+    expect(getProductsSpy.calls.any()).toBe(true);
     }));
 
   it('should display 4 links', async(() => {
