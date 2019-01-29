@@ -3,7 +3,9 @@
   <a *ngFor="let product of products" class="col-1-4"
       routerLink="/detail/{{product.id}}">
     <div class="module product">
-      <h4>{{product.code}}</h4>
+      <div>{{product.code}}</div>
+      <div>Quantity: {{product.quantity}}</div>
+      Location: {{product.floor}} / {{product.section}}
     </div>
   </a>
 </div>
