@@ -1,9 +1,11 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, tap, delay } from 'rxjs/operators';
 
 import { Product } from '../models/product';
+
+const PRODUCT_CODES = ['ABC 1234'];
 
 @Injectable({
     providedIn: 'root'
@@ -12,6 +14,12 @@ export class ProductService {
     private productUrl = "api/products"; //"api/products.json";
 
     constructor(private httpClient: HttpClient) {}
+
+    isProductCodeTaken(productCode: string): Observable<boolean> {
+        const isTaken = PRODUCT_CODES.includes(productCode);
+    
+        return of(isTaken).pipe(delay(400));
+    }
 
     getProducts(): Observable<Product[]> {
         return this.httpClient.get<Product[]>(this.productUrl).pipe(

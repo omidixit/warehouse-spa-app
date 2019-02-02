@@ -24,12 +24,12 @@ export class InMemoryDataService implements InMemoryDbService {
     const products = [];
     
     /* Init default product list*/
-    products.push(this.generateProduct(1, 100));
-    products.push(this.generateProduct(2, 12, 2));
-    products.push(this.generateProduct(3, 1, 1, 1));
-    products.push(this.generateProduct(4, 55, 2, 2));
-    products.push(this.generateProduct(5, 24, 2, 3));
-    products.push(this.generateProduct(6, 5, 3, 3));
+    products.push(this.generateProduct(1, 100, floors[0], sections[0]));
+    products.push(this.generateProduct(2, 12, floors[1], sections[0]));
+    products.push(this.generateProduct(3, 1 , floors[0], sections[1]));
+    products.push(this.generateProduct(4, 55, floors[1], sections[1]));
+    products.push(this.generateProduct(5, 24, floors[1], sections[2]));
+    products.push(this.generateProduct(6, 5, floors[2], sections[2]));
 
     return { floors, products, sections};
   }
@@ -44,7 +44,7 @@ export class InMemoryDataService implements InMemoryDbService {
   }
 
   //Private methods
-  generateProduct(id: number = 0, quantity: number = 0, floor: number = 1, section: number = 1): Product { 
+  generateProduct(id: number = 0, quantity: number = 0, floor: Floor, section: Section): Product { 
     return {id: id, code: this.generateProductCode(), quantity: quantity, floor: floor, section: section};
   }
 

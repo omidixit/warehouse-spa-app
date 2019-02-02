@@ -1,0 +1,134 @@
+<form novalidate
+      (ngSubmit)="save(productForm)"
+      #productForm="ngForm">
+<div class="card" *ngIf='product'>
+  <div class="card-header">
+    {{pageTitle}}
+  </div>
+  <div class="card-body">
+
+    <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+                for="productId">Product ID</label>
+        <div class="col-md-8">
+          <input class="form-control"
+                  id="productId"
+                  type="text"
+                  placeholder="Product ID (required)"
+                  required
+                  disabled
+                  maxlength="50"
+                  [(ngModel)]="product.id"
+                  name="productId"
+                  #productIdVar="ngModel"
+                  [ngClass]="{'is-invalid': (productIdVar.touched || productIdVar.dirty) && !productIdVar.valid }" />
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="productCode">Product Code</label>
+        <div class="col-md-8">
+          <input class="form-control"
+                 id="productCode"
+                 type="text"
+                 placeholder="Product Code (required)"
+                 required
+                 disabled
+                 minlength="3"
+                 [(ngModel)]=product.code
+                 name="productCode"
+                 #productCodeVar="ngModel"
+                 [ngClass]="{'is-invalid': (productCodeVar.touched || productCodeVar.dirty) && !productCodeVar.valid }" />
+          <span class="invalid-feedback">
+            <span *ngIf="productCodeVar.errors?.required">
+              Please enter product code.
+            </span>
+            <span *ngIf="productCodeVar.errors?.minlength">
+              The product code must be longer than 3 characters.
+            </span>
+          </span>
+        </div>
+      </div>   
+
+      <div class="form-group row mb-2">
+          <label class="col-md-2 col-form-label"
+                 for="quantity">Product Quantity</label>
+          <div class="col-md-8">
+            <input class="form-control"
+                   id="quantity"
+                   type="number"
+                   min="0" max="9999"
+                   placeholder="Product Code (required)"
+                   required
+                   [(ngModel)]="product.quantity"
+                   name="quantity"
+                   #quantityVar="ngModel"
+                   [ngClass]="{'is-invalid': (quantityVar.touched || quantityVar.dirty) && !quantityVar.valid }" />
+            <span class="invalid-feedback">
+              <span *ngIf="quantityVar.errors?.required">
+                Please enter product quantity.
+              </span>
+              <span *ngIf="quantityVar.errors?.min">
+                The product quantity must be greater than or equal to 0.
+              </span>
+            </span>
+          </div>
+        </div> 
+
+        <div class="form-group  row mb-2">
+            <label class="col-md-2 col-form-label"
+                   for="floor">Select Floor</label>
+            <div class="col-md-8">
+              <select class="form-control"
+                      id="floor"
+                      name="floor" 
+                      required 
+                      [(ngModel)]="product.floor"
+                      #floorVar="ngModel"
+                      [ngClass]="{'is-invalid': (floorVar.touched || floorVar.dirty) && !floorVar.valid }" >
+                <option *ngFor="let f of floors" [value]="f.id">{{f.name}}</option>
+              </select>
+            </div>
+            <span class="invalid-feedback">
+                <span *ngIf="floorVar.errors.required">
+                  Please enter your last name.
+                </span>
+            </span>
+        </div>
+
+        <div class="form-group  row mb-2">
+            <label class="col-md-2 col-form-label"
+                   for="section">Select Section</label>
+            <div class="col-md-8">
+              <select class="form-control"
+                      id="section"
+                      name="section" 
+                      required 
+                      [(ngModel)]="product.section">
+                <option *ngFor="let s of sections" [value]="s.id">{{s.name}}</option>
+              </select>
+            </div>
+          </div>
+
+  </div>
+  <div class="card-footer">
+    <button class="btn btn-outline-secondary"
+            (click)='onBack()'
+            style="width:80px">
+        <i class="fa fa-chevron-left"></i> Back
+    </button> &nbsp;
+    <button class="btn btn-primary mr-3"
+            type="submit"
+            style="width:80px"
+            [title]="productForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
+            [disabled]="!productForm.valid">Save
+    </button>
+  </div>
+</div>
+</form>
+<br>Dirty: {{ productForm.dirty }}
+<br>Touched: {{ productForm.touched }}
+<br>Valid: {{ productForm.valid }}
+<br>Value: {{ productForm.value | json }}
+<br>&nbsp;

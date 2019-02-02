@@ -45,11 +45,11 @@ export class ProductListComponent implements OnInit {
             case 'floor':
                 let filterFloor: number = <number>filterValue;
                 return this.products.filter((product: Product) => 
-                    product.floor == filterFloor);
+                    product.floor.id == filterFloor);
             case 'section':
                 let filterSection: number = <number>filterValue;
                 return this.products.filter((product: Product) => 
-                    product.section == filterSection);        
+                    product.section.id == filterSection);        
             default:
                 return this.products;
         }

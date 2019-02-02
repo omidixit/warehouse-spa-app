@@ -1,55 +1,95 @@
-<div class="card" *ngIf='product'>
-  <div class="card-header">
-    {{pageTitle + ': ' + product.code}}
-  </div>
-  <div class="card-body">
-    <h2>{{product.code | uppercase}} Details</h2>
-    <div><span>id: </span>{{product.id}}</div>
-    <div>
-      <label>Code:
-        <input [(ngModel)]="product.code" placeholder="code"/>
-      </label>
-    </div>
-    <div>
-      <label>Quantity:
-        <input id="quantity" name="quantity" class="form-control" required
-          [(ngModel)]="product.quantity" #quantity="ngModel" placeholder="quantity"/>
-      </label>
-
-      <div *ngIf="quantity.invalid && (quantity.dirty || quantity.touched)"
-          class="alert alert-danger">
-
-        <div *ngIf="quantity.errors.required">
-          Quantity is required.
-        </div>
-        <div *ngIf="quantity.errors.minlength">
-          Name must be at least 4 characters long.
-        </div>
-        <div *ngIf="quantity.errors.forbiddenName">
-          Name cannot be Bob.
+<div class="row">
+  <div>
+    <div class="card" *ngIf='product'>
+      <div class="card-header">
+        {{pageTitle + ': ' + product.code}}
+      </div>
+      <div class="card-body">
+        <h1>Product Detail</h1>
+    
+        <form [formGroup]="productForm" #formDir="ngForm" (ngSubmit)="onSubmit()">
+      
+          <div [hidden]="formDir.submitted">
+      
+            <div class="cross-validation" [class.cross-validation-error]="(productForm.touched || productForm.dirty)">
+              <div class="form-group">
+      
+                <label for="code">Code</label>
+                <input id="code" class="form-control"
+                      formControlName="code" required >
+      
+                <div *ngIf="code.pending">Validating...</div>
+                <div *ngIf="code.invalid && (code.dirty || code.touched)"
+                    class="alert alert-danger">
+      
+                  <div *ngIf="code.errors.required">
+                    Code is required.
+                  </div>
+                  <div *ngIf="code.errors.minlength">
+                    Code must be at least 4 characters long.
+                  </div>
+                  <div *ngIf="code.errors.forbiddenName">
+                    Code cannot be Bob.
+                  </div>
+                  <div *ngIf="code.errors?.uniqueCode">
+                    Code is already taken.
+                  </div>
+                </div>
+              </div>
+      
+              <div class="form-group">
+                <label for="quantity">Quantity</label>
+                <input id="quantity" class="form-control"
+                    formControlName="quantity" required >
+              </div>
+            </div>
+      
+            <div class="form-group">
+              <label for="floor">Select Floor</label>
+              <select id="floor" class="form-control"
+                  formControlName="floor" required >
+                <option *ngFor="let f of floors" [value]="f.id">{{f.name}}</option>
+              </select>
+      
+              <div *ngIf="floor.invalid && floor.touched" class="alert alert-danger">
+                <div *ngIf="floor.errors.required">Floor is required.</div>
+              </div>
+            </div>  
+    
+            <div class="form-group">
+              <label for="section">Select Section</label>
+              <select id="section" name="section" class="form-control"
+                      required [(ngModel)]="product.section.id" #section="ngModel">
+                <option *ngFor="let s of sections" [value]="s.id">{{s.name}}</option>
+              </select>
+      
+              <div *ngIf="section.invalid && section.touched" class="alert alert-danger">
+                <div *ngIf="section.errors.required">Section is required.</div>
+              </div>
+            </div>
+          </div>
+        </form>
+      
+        <div class="submitted-message" *ngIf="formDir.submitted">
+          <p>You've submitted your product, {{ productForm.value.code }}!</p>
+          <button (click)="formDir.resetForm({})">Add new product</button>
         </div>
       </div>
+      <div class="card-footer">
+        <button class="btn btn-outline-secondary"
+                (click)='onBack()'
+                style="width:80px">
+            <i class="fa fa-chevron-left"></i> Back
+        </button>&nbsp;&nbsp;
+        <button type="submit" class="btn btn-outline-secondary"
+                [disabled]="productForm.invalid"
+                style="width:80px">Save
+        </button>&nbsp;&nbsp;
+        <button type="button" class="btn btn-outline-secondary"
+                (click)="formDir.resetForm({})"
+                style="width:80px">Reset
+        </button>
+      </div>
     </div>
-    <div>
-      <label>Floor:
-        <input [(ngModel)]="product.floor" placeholder="floor"/>
-      </label>
-    </div>
-    <div>
-      <label>Section:
-        <input [(ngModel)]="product.section" placeholder="section"/>
-      </label>
-    </div>
-  </div>
-  <div class="card-footer">
-    <button class="btn btn-outline-secondary"
-            (click)='onBack()'
-            style="width:80px">
-        <i class="fa fa-chevron-left"></i> Back
-    </button>&nbsp;&nbsp;
-    <button class="btn btn-outline-secondary"
-            (click)='onSave()'
-            style="width:80px">Save
-    </button>
   </div>
 </div>

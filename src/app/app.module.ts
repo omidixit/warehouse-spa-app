@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
@@ -11,17 +11,26 @@ import { AppComponent } from './app.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ProductDetailGuard } from './product-detail/product-detail.guard';
+import { ForbiddenValidatorDirective } from './validators/forbidden-code.directive';
+import { UniqueCodeValidatorDirective } from './validators/unique-code.directive';
+import { ProductAddComponent } from './product-add/product-add.component';
+import { ProductEditComponent } from './product-edit/product-edit.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductListComponent,
-    ProductDetailComponent
+    ProductDetailComponent,
+    ForbiddenValidatorDirective,
+    UniqueCodeValidatorDirective,
+    ProductAddComponent,
+    ProductEditComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,    
     
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
@@ -33,6 +42,8 @@ import { ProductDetailGuard } from './product-detail/product-detail.guard';
 
     RouterModule.forRoot([
       { path: 'products', component: ProductListComponent },
+      { path: 'products/add', component: ProductAddComponent },
+      { path: 'products/edit/:id', component: ProductEditComponent },
       { path: 'products/:id', 
         canActivate: [ ProductDetailGuard ],
         component: ProductDetailComponent },
