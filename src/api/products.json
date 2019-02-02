@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "code": "MYTZ 123456",
+        "quantity": 100,
+        "floor": 1,
+        "section": 3
+    },
+    {
+        "id": 2,
+        "code": "UK 13462",
+        "quantity": 12,
+        "floor": 1,
+        "section": 6
+    },
+    {
+        "id": 3,
+        "code": "KOB 8472",
+        "quantity": 1,
+        "floor": 1,
+        "section": 7
+    }
+]

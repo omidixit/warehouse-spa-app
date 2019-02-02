@@ -1,7 +1,10 @@
-<h1>{{title}}</h1>
-<nav>
-  <a routerLink="/dashboard">Dashboard</a>
-  <a routerLink="/products">Products</a>
-</nav>
-<router-outlet></router-outlet>
-<!--<app-messages></app-messages>-->
+  <nav class="navbar navbar-expand navbar-light bg-light">
+    <a class="navbar-brand">{{pageTitle}}</a>
+    <ul class="nav nav-pills">
+      <li><a class="nav-link" [routerLink]="['/products']">Product List</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
+

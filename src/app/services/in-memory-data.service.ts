@@ -1,23 +1,37 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
-import { Product } from './product';
 import { Injectable } from '@angular/core';
+import { Product } from '../models/product';
+import { Floor } from '../models/floor';
+import { Section } from '../models/section';
 
 @Injectable({
   providedIn: 'root',
 })
 export class InMemoryDataService implements InMemoryDbService {
   createDb() {
+    const floors: Floor[] = [
+      { id: 1, name: 'Floor 1' },
+      { id: 2, name: 'Floor 2' },
+      { id: 3, name: 'Floor 3' }
+    ];
+
+    const sections: Section[] = [
+      { id: 1, name: 'Section 1' },
+      { id: 2, name: 'Section 2' },
+      { id: 3, name: 'Section 3' }
+    ];
+
     const products = [];
     
     /* Init default product list*/
     products.push(this.generateProduct(1, 100));
-    products.push(this.generateProduct(2, 12, "Floor 2"));
-    products.push(this.generateProduct(3, 1, "Floor 1", "Section 1"));
-    products.push(this.generateProduct(4, 55, "Floor 2", "Section 2"));
-    products.push(this.generateProduct(5, 24, "Floor 2", "Section 3"));
-    products.push(this.generateProduct(6, 5, "Floor 3", "Section 3"));
+    products.push(this.generateProduct(2, 12, 2));
+    products.push(this.generateProduct(3, 1, 1, 1));
+    products.push(this.generateProduct(4, 55, 2, 2));
+    products.push(this.generateProduct(5, 24, 2, 3));
+    products.push(this.generateProduct(6, 5, 3, 3));
 
-    return {products};
+    return { floors, products, sections};
   }
 
   // Overrides the genId method to ensure that a product always has an id.
@@ -30,7 +44,7 @@ export class InMemoryDataService implements InMemoryDbService {
   }
 
   //Private methods
-  generateProduct(id: number = 0, quantity: number = 0, floor: string = "Floor 1", section: string = "Section 1"): Product { 
+  generateProduct(id: number = 0, quantity: number = 0, floor: number = 1, section: number = 1): Product { 
     return {id: id, code: this.generateProductCode(), quantity: quantity, floor: floor, section: section};
   }
 
